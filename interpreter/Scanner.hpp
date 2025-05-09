@@ -27,8 +27,6 @@ private:
 	static char lookAhead( string_view );
 	
 	static void isPunct( string_view );
-	
-	static void isIndirectAddress( string_view );
 	static void isLiteral( string_view );
 };
 

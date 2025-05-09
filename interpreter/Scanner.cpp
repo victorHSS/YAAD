@@ -1,8 +1,13 @@
 #include "Scanner.hpp"
 
 #include <cctype>
-
+#include <string>
 #include <stdexcept>
+
+#include <set>
+using std::set;
+
+using namespace std::literals;
 
 static vector<Token> Scanner::analyse(string_view line)
 {
@@ -20,13 +25,14 @@ static vector<Token> Scanner::analyse(string_view line)
 			isPunct(line);
 		else if (isdigit(line[pos]))
 			isLiteral(line);
+		else if (/* PAREI AQUI*/)
 	}
 
 }
 
 static void Scanner::ignoreBlank(string_view line)
 {
-	return line.find_first_not_of(" \t");
+	return line.find_first_not_of(" \t"sv);
 }
 
 static char Scanner::lookAhead( string_view line)
@@ -39,30 +45,42 @@ static char Scanner::lookAhead( string_view line)
 
 static void Scanner::isPunct( string_view line )
 {
-	if (line[pos] == ',') {
-		tokenList.push_back( Token{TOKEN_TYPE::DELIMITER , ','} );
+	if (line[pos] == ';')
+		pos = line.size();
+	else if (set{'(',')','[',']',','}.contains(line[pos]) ) {
+		tokenList.push_back( Token{TOKEN_TYPE::DELIMITER , line[pos]} );
 		++pos;
 	}
-	else if (line[pos] == ';')
-		pos = line.size();
-	else if (line[pos] == '[')
-		isIndirectAddress(line);
-	//( - EXPRESSION
-	//- -> numeros negativos... ver se o último token é um delimitador e chama isLiteral
-}
-
-static void Scanner::isIndirectAddress( string_view line )
-{
-	size_t endP = line.find_first_of(']');
-	
-	if (endP == string_view::npos)
-		throw std::runtime_error("']' não encontrado.");
-	
-	//aqui eu vou ter que detalhar mais... mas está bom para começo de conversa
-	tokenList.push_back( Token{TOKEN_TYPE::IDENTIFIER, line.substr(pos, endP - pos + 1)} );
+	else if (line[pos] == '-')
+	{
+		if (tokenList.back().isDelimiter())
+			isLiteral(line);
+		else 
+			tokenList.push_back( Token{TOKEN_TYPE::OPERATOR , '-'} );
+	}
 }
 
 static void Scanner::isLiteral( string_view line )
 {
+	//char lh = lookAhead(line);
+	size_t endP{};
 	
+	if (line[pos] == '-')
+	{
+		endP = line.substr(pos+1).find_last_of("0123456789"sv) + 1;
+		tokenList.push_back( 
+			Token{TOKEN_TYPE::LITERAL, line.substr(pos, endP - pos), TOKEN_SUBTYPE::DECIMAL_BASE} 
+		);
+	} 
+	else
+	{ 
+		endP = line.find_last_of("0123456789abcdefxoqbh"sv) + 1;
+		tokenList.push_back( 
+			Token{TOKEN_TYPE::LITERAL, line.substr(pos, endP - pos)} 
+		);
+	}
+	
+	// VALIDAR?
+	
+	pos = endP;
 }

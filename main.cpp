@@ -1,7 +1,13 @@
-#include <stdio.h>
+#include <iostream>
 
-int main(int argc, char **argv)
+int main()
 {
-	printf("hello world\n");
+	//ler arquivo
+	//ler linha
+	//processar linha - para minusculas
+	
+	//chamar scanner para linha
+	//chamar interpretador
+	
 	return 0;
 }

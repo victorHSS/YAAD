@@ -10,12 +10,11 @@ enum class TOKEN_TYPE {
 	KEYWORD,
 	IDENTIFIER,
 	LITERAL,
-	EXPRESSION,
+	OPERATOR,
 	DELIMITER
 };
 
-enum class TOKEN_SUBTYPE
-{
+enum class TOKEN_SUBTYPE {
 	NONE,
 	HEXA_BASE,
 	OCTAL_BASE,
@@ -33,6 +32,8 @@ public:
 		
 	TOKEN_TYPE getType() const { return type; }
 	string getValue() const { return value; }
+	
+	bool isDelimiter() { return type == TOKEN_TYPE::DELIMITER; }
 	
 	~Token() = default;
 private:
