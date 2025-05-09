@@ -25,14 +25,15 @@ static vector<Token> Scanner::analyse(string_view line)
 			isPunct(line);
 		else if (isdigit(line[pos]))
 			isLiteral(line);
-		else if (/* PAREI AQUI*/)
+		else if (isalpha(line[pos])
+			isWordIdentifier(line);
 	}
 
 }
 
 static void Scanner::ignoreBlank(string_view line)
 {
-	return line.find_first_not_of(" \t"sv);
+	return line.find_first_not_of(" \t\n"sv);
 }
 
 static char Scanner::lookAhead( string_view line)
@@ -83,4 +84,17 @@ static void Scanner::isLiteral( string_view line )
 	// VALIDAR?
 	
 	pos = endP;
+}
+
+static void Scanner::isWordIdentifier( string_view line )
+{
+	string word{};
+	while (isalphanum(line[pos]) 
+	{
+		word += line[pos];
+		pos++;
+	}
+	//registrador
+	//palavra-chave
+	//label
 }

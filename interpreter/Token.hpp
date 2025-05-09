@@ -8,9 +8,13 @@ using std::string, std::string_view;
 
 enum class TOKEN_TYPE {
 	KEYWORD,
-	IDENTIFIER,
+	REGISTER,
+	LABEL,
+	
 	LITERAL,
+	
 	OPERATOR,
+	
 	DELIMITER
 };
 

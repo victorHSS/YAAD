@@ -28,6 +28,7 @@ private:
 	
 	static void isPunct( string_view );
 	static void isLiteral( string_view );
+	static void isWordIdentifier( string_view );
 };
 
 #endif // SCANNER_HPP

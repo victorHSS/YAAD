@@ -1,0 +1,15 @@
+global
+section
+db
+dw
+dq
+mov
+add
+sub
+mul
+div
+inc
+dec
+push
+pop
+call
