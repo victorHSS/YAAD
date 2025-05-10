@@ -18,8 +18,8 @@ public:
 	static vector<Token> analyse( string_view );
 
 private:
-	static size_t pos{};
-	static vector<Token> tokenList{};
+	static size_t pos;
+	static vector<Token> tokenList;
 	
 	//auxiliares
 	static void ignoreBlank( string_view );

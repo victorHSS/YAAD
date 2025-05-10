@@ -1,13 +1,15 @@
 #ifndef TOKEN_HPP
 #define TOKEN_HPP
 
+#include <iostream>
 #include <string>
 #include <string_view>
-
 using std::string, std::string_view;
 
+#include <format>
+
 enum class TOKEN_TYPE {
-	KEYWORD,
+	KEYWORD		= 0,
 	REGISTER,
 	LABEL,
 	
@@ -18,8 +20,22 @@ enum class TOKEN_TYPE {
 	DELIMITER
 };
 
+const char *const token_type_str[] =
+{
+	"KEYWORD",
+	"REGISTER",
+	"LABEL",
+	
+	"LITERAL",
+	
+	"OPERATOR",
+	
+	"DELIMITER"
+};
+
+
 enum class TOKEN_SUBTYPE {
-	NONE,
+	NONE		= 0,
 	HEXA_BASE,
 	OCTAL_BASE,
 	DECIMAL_BASE,
@@ -28,14 +44,26 @@ enum class TOKEN_SUBTYPE {
 
 class Token
 {
+	friend std::ostream &operator<<(std::ostream &out, const Token &token)
+	{
+		out << std::format("Token(tp[{}] val['{}'] pos[{}])",
+			token_type_str[ static_cast<int>(token.type) ],
+			token.value,
+			token.sPos
+		);
+		
+		return out;
+	}
 public:
-	Token(TOKEN_TYPE type, string_view value, TOKEN_SUBTYPE subType = TOKEN_SUBTYPE::NONE):
+	Token(TOKEN_TYPE type, string_view value, int sPos, TOKEN_SUBTYPE subType = TOKEN_SUBTYPE::NONE):
 		type{type},
 		value{value},
+		sPos{sPos},
 		subType{subType} {}
 		
 	TOKEN_TYPE getType() const { return type; }
 	string getValue() const { return value; }
+	int getPos() const { return sPos; }
 	
 	bool isDelimiter() { return type == TOKEN_TYPE::DELIMITER; }
 	
@@ -43,6 +71,7 @@ public:
 private:
 	TOKEN_TYPE type;
 	string value;
+	int sPos;
 	TOKEN_SUBTYPE subType;
 };
 

@@ -13,3 +13,4 @@ dec
 push
 pop
 call
+syscall
