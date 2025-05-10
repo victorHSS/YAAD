@@ -13,7 +13,7 @@ int main()
 	std::ifstream file("main.asm");
 	std::string lineN{};
 	
-	int count{0};
+	size_t count{0};
 	while ( getline(file, lineN) )
 	{
 		std::string line(lineN.size(),' ');
@@ -26,7 +26,8 @@ int main()
 			std::cout << token << std::endl;
 		
 		getline(std::cin, line);
-		//chamar interpretador
+		//Parser::parse();
+		//Interpreter::execute();
 	}
 	
 	return 0;
