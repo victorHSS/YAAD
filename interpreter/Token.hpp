@@ -39,23 +39,37 @@ enum class TOKEN_SUBTYPE {
 	HEXA_BASE,
 	OCTAL_BASE,
 	DECIMAL_BASE,
-	BINARY_BASE
+	BINARY_BASE,
+	
+	STRING
+};
+
+const char *const token_subtype_str[] =
+{
+	"NONE",
+	"HEXA_BASE",
+	"OCTAL_BASE",
+	"DECIMAL_BASE",
+	"BINARY_BASE",
+	
+	"STRING"
 };
 
 class Token
 {
 	friend std::ostream &operator<<(std::ostream &out, const Token &token)
 	{
-		out << std::format("Token(tp[{}] val['{}'] pos[{}])",
+		out << std::format("Token(tp[{}] val['{}'] pos[{}] stp[{}])",
 			token_type_str[ static_cast<int>(token.type) ],
 			token.value,
-			token.sPos
+			token.sPos,
+			token_subtype_str[ static_cast<int>(token.subType) ]
 		);
 		
 		return out;
 	}
 public:
-	Token(TOKEN_TYPE type, string_view value, int sPos, TOKEN_SUBTYPE subType = TOKEN_SUBTYPE::NONE):
+	Token(TOKEN_TYPE type, string_view value, size_t sPos, TOKEN_SUBTYPE subType = TOKEN_SUBTYPE::NONE):
 		type{type},
 		value{value},
 		sPos{sPos},
@@ -71,7 +85,7 @@ public:
 private:
 	TOKEN_TYPE type;
 	string value;
-	int sPos;
+	size_t sPos;
 	TOKEN_SUBTYPE subType;
 };
 

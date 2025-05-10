@@ -26,9 +26,12 @@ private:
 	
 	static char lookAhead( string_view );
 	
+	static TOKEN_SUBTYPE trickLiteralType( string_view );
+	
 	static void isPunct( string_view );
 	static void isLiteral( string_view );
 	static void isWordIdentifier( string_view );
+	static void isString( string_view );
 };
 
 #endif // SCANNER_HPP
