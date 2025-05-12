@@ -4,8 +4,8 @@
 #include <string_view>
 using std::string_view;
 
-#include <vector>
-using std::vector;
+#include <deque>
+using std::deque;
 
 #include "Token.hpp"
 
@@ -15,11 +15,11 @@ public:
 	Scanner() = delete;
 	~Scanner() = delete;
 	
-	static vector<Token> analyse( string_view );
+	static deque<Token> analyse( string_view );
 
 private:
 	static size_t pos;
-	static vector<Token> tokenList;
+	static deque<Token> tokenList;
 	
 	//auxiliares
 	static void ignoreBlank( string_view );

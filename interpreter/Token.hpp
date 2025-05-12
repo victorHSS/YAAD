@@ -77,9 +77,14 @@ public:
 		
 	TOKEN_TYPE getType() const { return type; }
 	string getValue() const { return value; }
-	int getPos() const { return sPos; }
+	size_t getPos() const { return sPos; }
+	TOKEN_SUBTYPE getSubType() const { return subType; }
 	
 	bool isDelimiter() { return type == TOKEN_TYPE::DELIMITER; }
+	bool isRegister() { return type == TOKEN_TYPE::REGISTER; }
+	bool isKeyword() { return type == TOKEN_TYPE::KEYWORD; }
+	bool isLabel() { return type == TOKEN_TYPE::LABEL; }
+	bool isLiteral() { return type == TOKEN_TYPE::LITERAL; }
 	
 	~Token() = default;
 private:

@@ -17,9 +17,9 @@ using std::set;
 using namespace std::literals;
 
 size_t Scanner::pos{};
-vector<Token> Scanner::tokenList{};
+deque<Token> Scanner::tokenList{};
 
-vector<Token> Scanner::analyse(string_view line)
+deque<Token> Scanner::analyse(string_view line)
 {
 	pos = 0;				//apontador para o char corrente
 	tokenList.clear();

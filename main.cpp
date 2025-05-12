@@ -11,23 +11,22 @@
 int main()
 {
 	std::ifstream file("main.asm");
-	std::string lineN{};
+	std::string line{};
 	
 	size_t count{0};
-	while ( getline(file, lineN) )
+	while ( getline(file, line) )
 	{
-		std::string line(lineN.size(),' ');
-		std::transform(lineN.cbegin(),lineN.cend(),line.begin(),tolower);
+		std::transform(line.cbegin(),line.cend(),line.begin(),tolower);
 		
 		std::cout << std::format("{:03d} '{}'\n", count++, line);
-		std::vector<Token> tokens = Scanner::analyse(line);
+		std::deque<Token> tokens = Scanner::analyse(line);
 		
 		for (auto &token : tokens)
 			std::cout << token << std::endl;
 		
 		getline(std::cin, line);
 		//Parser::parse();
-		//Interpreter::execute();
+		//Interpreter::execute(tokens,count);
 	}
 	
 	return 0;
